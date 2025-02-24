@@ -1,0 +1,98 @@
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+// Structure to store patient details
+struct Patient {
+    int id;
+    string name;
+    int age;
+    string disease;
+};
+
+vector<Patient> patients;
+int patientCount = 0;
+
+// Function to add a patient
+void addPatient() {
+    Patient p;
+    p.id = ++patientCount;
+    cout << "Enter patient name: ";
+    cin.ignore();
+    getline(cin, p.name);
+    cout << "Enter age: ";
+    cin >> p.age;
+    cout << "Enter disease: ";
+    cin.ignore();
+    getline(cin, p.disease);
+    patients.push_back(p);
+    cout << "Patient added successfully!\n";
+}
+
+// Function to display all patients
+void displayPatients() {
+    if (patients.empty()) {
+        cout << "No patients found!\n";
+        return;
+    }
+    cout << "\nList of Patients:\n";
+    for (const auto &p : patients) {
+        cout << "ID: " << p.id << " | Name: " << p.name << " | Age: " << p.age << " | Disease: " << p.disease << "\n";
+    }
+}
+
+// Function to search for a patient by ID
+void searchPatient() {
+    int id;
+    cout << "Enter patient ID to search: ";
+    cin >> id;
+    for (const auto &p : patients) {
+        if (p.id == id) {
+            cout << "Patient Found: \n";
+            cout << "ID: " << p.id << " | Name: " << p.name << " | Age: " << p.age << " | Disease: " << p.disease << "\n";
+            return;
+        }
+    }
+    cout << "Patient not found!\n";
+}
+
+// Function to delete a patient by ID
+void deletePatient() {
+    int id;
+    cout << "Enter patient ID to delete: ";
+    cin >> id;
+    for (auto it = patients.begin(); it != patients.end(); ++it) {
+        if (it->id == id) {
+            patients.erase(it);
+            cout << "Patient deleted successfully!\n";
+            return;
+        }
+    }
+    cout << "Patient not found!\n";
+}
+
+int main() {
+    int choice;
+    do {
+        cout << "\nHospital Management System\n";
+        cout << "1. Add Patient\n";
+        cout << "2. View Patients\n";
+        cout << "3. Search Patient\n";
+        cout << "4. Delete Patient\n";
+        cout << "5. Exit\n";
+        cout << "Enter your choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1: addPatient(); break;
+            case 2: displayPatients(); break;
+            case 3: searchPatient(); break;
+            case 4: deletePatient(); break;
+            case 5: cout << "Exiting...\n"; break;
+            default: cout << "Invalid choice!\n";
+        }
+    } while (choice != 5);
+    return 0;
+}
